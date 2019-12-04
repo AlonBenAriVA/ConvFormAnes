@@ -11,6 +11,8 @@ From the CLI:
 
 4) node index.js
 
+Go to localhost:8000
+
 start filling the form you should see what you enter being passed to the backend on the terminal and  on the console.
 
 
