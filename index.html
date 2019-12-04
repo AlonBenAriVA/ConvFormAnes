@@ -1,0 +1,76 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+
+
+  <form>
+    <fieldset id = 'group0'>
+      <input type="text" id = "lastname">
+      <label for="lastname"> Last Name</label>
+      <br>
+      <input type="text" id = "firstname">
+      <label for="firstname"> First Name</label> 
+      <br>
+      <input type="text" id = "PatientSSN">
+      <label for="PatientSSN"> Patient SSN</label>
+
+    </fieldset>
+    <fieldset id = 'group1'>
+        <label >Question 1</label>
+        <input type="radio" name="group1" value="Yes" checked="checked" id="r1">
+        <label for="r1">yes</label>
+        <input type="radio" name="group1" value="No" id="r2">
+        <label for="r2">No</label>
+    </fieldset>
+     
+
+      <br>
+    <fieldset id = group2>
+      <label >Question 2</label>
+      <input type="radio" name="group2" value="yes" checked="checked" id="r1">
+      <label for="r1">Yes</label>
+      <input  type ="radio" name="group2" value="no" id="r2">
+      <label for="r2">No</label>
+    </fieldset>
+     
+
+
+  </form>
+  <button id = 'submit' type = 'submit'> Submit</button>
+</body>
+
+<script>
+
+
+Qs = ['Question1','Question2','Question3','Question 4']
+
+
+function getFormVals() {
+  record = {}
+  record.lastName = $('#lastname').val()
+  record.firstName = $('#firstname').val()
+  record.patientSSN = $('#PatientSSN').val()
+  //
+  console.log(record)
+  var choice = $(':input').serializeArray()
+  record.choice = choice;
+  $.ajax({
+    type:'POST',
+    url:'/post',
+    contentType:'application/json',
+    data:JSON.stringify(record),
+    success:function(response){
+      console.log(response)
+    }
+
+  })
+}
+
+$('#submit').click(getFormVals)
+
+</script>
+
+</html>
