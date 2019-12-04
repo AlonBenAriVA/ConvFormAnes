@@ -1,12 +1,13 @@
 # ConvFormAnes
-The begining of node JS conversational form application for anesthesia preop
+The begining of node JS conversational form application for anesthesia preop 
+
 1) Clone the repo
 
-2)cd ConvFormAnes
+2) cd ConvFormAnes
 
 From the CLI:
 
-3)npm install
+3) npm install
 
 4) node index.js
 
