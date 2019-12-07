@@ -1,13 +1,215 @@
 <html>
 <head>
+    <title>Conversational Form</title>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+
+
+        body
+        {
+          background-color: #fcfcfc;
+        }
+        html 
+        {
+            font-size: 24px;
+        }
+        .outer-div
+        {
+          display: table;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+        border: 3px solid black;
+        }
+        .mid-div
+        {
+          display: table-cell;
+          vertical-align: middle;
+          border: 3px solid black
+        }
+        .center-div
+        {
+          margin: 0 auto;
+          width: 600px;
+          height: 300px;
+          border-radius: 3px;
+        }
+        .pagination {
+            justify-content: center
+        }
+        ul {
+          list-style-type: none;
+        }
+    
+        li {
+          display: inline-block;
+        }
+    
+        input[type="checkbox"][id^="cb"] {
+          display: none;
+        }
+    
+        input[type="radio"][id^="rb"] {
+          display: none;
+        }
+        
+        label {
+          border: 1px solid #fff;
+          padding: 10px;
+          display: block;
+          position: relative;
+          margin: 10px;
+          cursor: pointer;
+        }
+    
+        label:before {
+          background-color: white;
+          color: white;
+          content: " ";
+          display: block;
+          border-radius: 50%;
+          border: 1px solid grey;
+          position: absolute;
+          top: -5px;
+          left: -5px;
+          width: 25px;
+          height: 25px;
+          text-align: center;
+          line-height: 28px;
+          transition-duration: 0.4s;
+          transform: scale(0);
+        }
+    
+        label img {
+          height: 100px;
+          width: 160px;
+          transition-duration: 0.2s;
+          transform-origin: 50% 50%;
+        }
+    
+        :checked + label {
+          border-color: #ddd;
+        }
+    
+        :checked + label:before {
+          content: "✓";
+          background-color: grey;
+          transform: scale(1);
+        }
+    
+        :checked + label img {
+          transform: scale(0.9);
+          box-shadow: 0 0 5px #333;
+          z-index: -1;
+        }
+    </style>
+
 </head>
 
 <body>
+<!--    These 3 divs center the questions into the middle of the viewport-->
+<div class="outer-div">
+    <div class="mid-div">
+    <div class="center-div"> 
+     
+ <!--This is the pagination part. -->
+ <nav aria-label="Page navigation example">
+    <ul id="pagination" class="pagination">
+     <li id="previous-page" class="page-item">
+       <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+         <span aria-hidden="true">&laquo; Previous</span>
+         <span class="sr-only">Previous</span>
+       </a>
+     </li>
+   </ul>
+ </nav>
 
 
-  <form>
-    <fieldset id = 'group0'>
+
+<!-- Just adding four - one with no question, one with text, two with radio buttons yes/no -->
+<!-- yes and no button paths are hard coded back to minathuvia.com for now -->
+
+  <form id="loop">   <!-- loop id is needed for pagination-->
+      <div class="list-group">  <!--list-group is the class used for pagination to identify content for each page-->
+        <h4>Anesthesia Pre-Operative Screening Tool</h4>
+        <p>Thank you for taking time to answer these questions</p>
+    </div>
+
+    <div class="list-group">
+        <p>Please enter your name, email address, and social security number.</p>
+        <br>
+         <div class="input-group mb-3">
+             <div class="input-group-prepend">
+               <span class="input-group-text">Patient Name</span>
+             </div>
+             <input id="firstname1" type="text" class="form-control" placeholder="First Name">
+             <input id="lastname1" type="text" class="form-control" placeholder="Last Name">
+         </div>
+         <div class="input-group mb-3">
+             <div class="input-group-prepend">
+                 <span class="input-group-text" id="basic-addon1">Email address</span>
+             </div>
+             <input id="email1" type="text" class="form-control" placeholder="myemail@something.com" aria-label="Username" aria-describedby="basic-addon1">
+         </div>
+         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+         <div><br></div>
+         <div class="input-group mb-3">
+             <div class="input-group-prepend">
+                 <span class="input-group-text" id="basic-addon1">SS#</span>
+             </div>
+             <input id="ssn1" type="text" class="form-control" placeholder="xxx-xx-xxxx" aria-label="Username" aria-describedby="basic-addon1">
+         </div>
+         <small id="emailHelp" class="form-text text-muted">This information is secure.</small>
+     </div>
+
+
+     <div class="form-group list-group">
+        <h4>Heading</h4>
+        <p>Do you use a cane, walker, or schooter?</p>
+         <ul>
+          <li><input type="radio" name="picradio1" value="yes" id="rb1" onClick="nextQuestion()"/>
+            <label for="rb1"><img src="http://minathuvia.com/yes.png" /></label>
+          </li>
+          <li><input type="radio" name="picradio1" value="no" id="rb2" onClick="nextQuestion()"/>
+            <label for="rb2"><img src="http://minathuvia.com/no.png" /></label>
+          </li>
+        </ul>
+    </div>
+
+
+    <div class="form-group list-group">
+        <h4>Heading</h4>
+        <p>Do you need help getting to or from the toilet?</p>
+         <ul>
+          <li><input type="radio" name="picradio2" value="yes" id="rb3" onClick="nextQuestion()"/>
+            <label for="rb3"><img src="http://minathuvia.com/yes.png" /></label>
+          </li>
+          <li><input type="radio" name="picradio2" value="no" id="rb4" onClick="nextQuestion()"/>
+            <label for="rb4"><img src="http://minathuvia.com/no.png" /></label>
+          </li>
+        </ul>
+    </div>
+
+
+    <div class="form-group list-group">
+        <button id='submit' type='submit' class="btn btn-primary">Submit</button>
+    </div>
+
+<!-- These will not be in the pagination as they are out of the form tag and with the correct class -->
+<!-- Commented out for now -->
+    <!-- <fieldset id = 'group0'>
       <input type="text" id = "lastname">
       <label for="lastname"> Last Name</label>
       <br>
@@ -40,6 +242,9 @@
 
   </form>
   <button id = 'submit' type = 'submit'> Submit</button>
+ -->
+
+</div></div></div>
 </body>
 
 <script>
@@ -50,9 +255,20 @@ Qs = ['Question1','Question2','Question3','Question 4']
 
 function getFormVals() {
   record = {}
-  record.lastName = $('#lastname').val()
-  record.firstName = $('#firstname').val()
-  record.patientSSN = $('#PatientSSN').val()
+  // record.lastName = $('#lastname').val()
+  // record.firstName = $('#firstname').val()
+  // record.patientSSN = $('#PatientSSN').val()
+
+// This approach uses an id attribute to obtain the value of the input element and then adds that to the record object
+// Sticking with this approach, the added questions would be access as follows. Adding a #1 to the id just to separate Alon's questions from mine
+// TODO: loop through the questions rather than doing this individually
+  record.lastName1 = $('#lastname1').val()
+  record.firstName1 = $('#firstname1').val()
+  record.email1 = $('#email1').val()
+  record.ssn1 = $('#ssn1').val()
+  record.radioQuestion1 = $("input[name='picradio1']:checked").val();
+  record.radioQuestion2 = $("input[name='picradio2']:checked").val();
+
   //
   console.log(record)
   var choice = $(':input').serializeArray()
@@ -70,6 +286,80 @@ function getFormVals() {
 }
 
 $('#submit').click(getFormVals)
+
+
+
+
+// pagination javaScript
+var numberOfItems = $("#loop .list-group").length
+var limitPerPage = 1;
+var totalPages = Math.round(numberOfItems / limitPerPage);
+
+
+$("#loop .list-group:gt("+ (limitPerPage-1) +")").hide();      
+$("#pagination").append("<li class='page-item current-page hideme active'><a class='page-link' href='javascript:void(0)'>" + 1 + "</a></li>");
+
+
+for (var i = 2; i <= totalPages; i++) {
+    $("#pagination").append("<li class='page-item current-page hideme'><a class='page-link' href='javascript:void(0)'>" + i + "</a></li>")
+}
+    
+$(".hideme").hide();
+$("#pagination").append("<li id='next-page' class='page-item'><a class='page-link' href='javascript:void(0)'aria-label='Next'><span aria-hidden='true'>Next &raquo;</span><span class='sr-only'>Next</span></a></li>");
+       
+       
+$("#next-page").on("click", function() {
+    var currentPage = $(".pagination li.active").index();
+    if(currentPage === totalPages) {
+        return false;
+    } else {
+        currentPage++;
+        $(".pagination li").removeClass("active");
+        $("#loop .list-group").hide();
+        var grandTotal = limitPerPage * currentPage;
+        for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+            $("#loop .list-group:eq(" + i + ")").show();
+            }
+        $(".pagination li.current-page:eq(" + (currentPage - 1) +")").addClass("active");
+    }
+});
+       
+$("#previous-page").on("click", function() {
+    var currentPage = $(".pagination li.active").index();
+    if(currentPage === 1) {
+        return false;
+    } else {
+        currentPage--;
+        $(".pagination li").removeClass("active");
+        $("#loop .list-group").hide();
+        var grandTotal = limitPerPage * currentPage;
+        for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+            $("#loop .list-group:eq(" + i + ")").show();
+            }
+        $(".pagination li.current-page:eq(" + (currentPage - 1) +")").addClass("active");
+    }
+});
+
+    
+function nextQuestion() {
+    var currentPage = $(".pagination li.active").index();
+    if(currentPage === totalPages) {
+        return false;
+    } else {
+        currentPage++;
+        console.log (currentPage);
+        $(".pagination li").removeClass("active");
+        $("#loop .list-group").hide();
+        var grandTotal = limitPerPage * currentPage;
+        for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+            $("#loop .list-group:eq(" + i + ")").show();
+            }
+        $(".pagination li.current-page:eq(" + (currentPage - 1) +")").addClass("active");
+    }
+}
+
+
+
 
 </script>
 
