@@ -1,0 +1,566 @@
+<html>
+<head>
+ <title>Conversational Form</title>
+ 
+ <!-- Latest compiled and minified CSS -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 
+ <!-- jQuery library -->
+ <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+ <!-- Popper JS -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+ <!-- Latest compiled JavaScript -->
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+ <style>
+
+
+ body
+ {
+ background-color: #fcfcfc;
+ }
+ html 
+ {
+ font-size: 24px;
+ }
+ .outer-div
+ {
+ display: table;
+ position: absolute;
+ height: 100%;
+ width: 100%;
+ border: 3px solid black;
+ }
+ .mid-div
+ {
+ display: table-cell;
+ vertical-align: middle;
+ border: 3px solid black
+ }
+ .center-div
+ {
+ margin: 0 auto;
+ width: 600px;
+ height: 300px;
+ border-radius: 3px;
+ }
+ .pagination {
+ justify-content: center
+ }
+ ul {
+ list-style-type: none;
+ }
+ 
+ li {
+ display: inline-block;
+ }
+ 
+ input[type="checkbox"][id^="cb"] {
+ display: none;
+ }
+ 
+ input[type="radio"][id^="rb"] {
+ display: none;
+ }
+ 
+ label {
+ border: 1px solid #fff;
+ padding: 10px;
+ display: block;
+ position: relative;
+ margin: 10px;
+ cursor: pointer;
+ }
+ 
+ label:before {
+ background-color: white;
+ color: white;
+ content: " ";
+ display: block;
+ border-radius: 50%;
+ border: 1px solid grey;
+ position: absolute;
+ top: -5px;
+ left: -5px;
+ width: 25px;
+ height: 25px;
+ text-align: center;
+ line-height: 28px;
+ transition-duration: 0.4s;
+ transform: scale(0);
+ }
+ 
+ label img {
+ height: 100px;
+ width: 160px;
+ transition-duration: 0.2s;
+ transform-origin: 50% 50%;
+ }
+ 
+ :checked + label {
+ border-color: #ddd;
+ }
+ 
+ :checked + label:before {
+ content: "✓";
+ background-color: grey;
+ transform: scale(1);
+ }
+ 
+ :checked + label img {
+ transform: scale(0.9);
+ box-shadow: 0 0 5px #333;
+ z-index: -1;
+ }
+ .next {
+ border: solid;
+ text-align: center;
+ justify-content: center;
+ background-color: black
+ }
+ .next li input {
+ text-align: center;
+ border: none;
+ width: auto;
+ 
+ }
+ </style>
+
+</head>
+
+<body>
+<!-- These 3 divs center the questions into the middle of the viewport-->
+<div class="outer-div">
+ <div class="mid-div">
+ <div class="center-div"> 
+ 
+ <!--This is the pagination part. -->
+ <nav aria-label="Page navigation example">
+ <ul id="pagination" class="pagination">
+ <li id="previous-page" class="page-item">
+ <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+ <span aria-hidden="true">&laquo; Previous</span>
+ <span class="sr-only">Previous</span>
+ </a>
+ </li>
+ </ul>
+ </nav>
+
+
+
+<!-- Just adding four - one with no question, one with text, two with radio buttons yes/no -->
+<!-- yes and no button paths are hard coded back to minathuvia.com for now -->
+
+ <form id="loop"> <!-- loop id is needed for pagination-->
+ <div class="list-group"> <!--list-group is the class used for pagination to identify content for each page-->
+ <h4>Anesthesia Pre-Operative Screening Tool</h4>
+ <p>Thank you for taking time to answer these questions</p>
+ <ul class="next">
+ <li><input placeholder="Next" onClick="nextQuestion()"/>
+ </li>
+ </ul>
+ </div>
+
+ <div class="list-group">
+ <p>Please enter your name, email address, and social security number.</p>
+ <br>
+ <div class="input-group mb-3">
+ <div class="input-group-prepend">
+ <span class="input-group-text">Patient Name</span>
+ </div>
+ <input id="firstname1" type="text" class="form-control" placeholder="First Name">
+ <input id="lastname1" type="text" class="form-control" placeholder="Last Name">
+ </div>
+ <div class="input-group mb-3">
+ <div class="input-group-prepend">
+ <span class="input-group-text" id="basic-addon1">Email address</span>
+ </div>
+ <input id="email1" type="text" class="form-control" placeholder="myemail@something.com" aria-label="Username" aria-describedby="basic-addon1">
+ </div>
+ <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+ <div><br></div>
+ <div class="input-group mb-3">
+ <div class="input-group-prepend">
+ <span class="input-group-text" id="basic-addon1">SS#</span>
+ </div>
+ <input id="ssn1" type="text" class="form-control" placeholder="xxx-xx-xxxx" aria-label="Username" aria-describedby="basic-addon1">
+ </div>
+ <small id="emailHelp" class="form-text text-muted">This information is secure.</small>
+ <br>
+ <ul class="next">
+ <li><input placeholder="Next" onClick="nextQuestion()"/>
+ </li>
+ </ul>
+ </div>
+
+
+ <div class="form-group list-group">
+ <p>Do you use a cane, walker, or schooter?</p>
+ <ul>
+ <li><input type="radio" name="picradio1" value="yes" id="rb1" onClick="nextQuestion()"/>
+ <label for="rb1"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio1" value="no" id="rb2" onClick="nextQuestion()"/>
+ <label for="rb2"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+
+
+ <div class="form-group list-group">
+ <p>Do you need help getting to or from the toilet?</p>
+ <ul>
+ <li><input type="radio" name="picradio2" value="yes" id="rb3" onClick="nextQuestion()"/>
+ <label for="rb3"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio2" value="no" id="rb4" onClick="nextQuestion()"/>
+ <label for="rb4"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+
+ <div class="form-group list-group">
+ <p>Do you need help preparing and / or eating meals?</p>
+ <ul>
+ <li><input type="radio" name="picradio3" value="yes" id="rb5" onClick="nextQuestion()"/>
+ <label for="rb5"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio3" value="no" id="rb6" onClick="nextQuestion()"/>
+ <label for="rb6"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+
+ <div class="form-group list-group">
+ <p>Do you need help to shower or bathe?</p>
+ <ul>
+ <li><input type="radio" name="picradio4" value="yes" id="rb7" onClick="nextQuestion()"/>
+ <label for="rb7"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio4" value="no" id="rb8" onClick="nextQuestion()"/>
+ <label for="rb8"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+
+ <div class="form-group list-group">
+ <p>Do you use oxygen support devices at home?</p>
+ <ul>
+ <li><input type="radio" name="picradio5" value="yes" id="rb9" onClick="nextQuestion()"/>
+ <label for="rb9"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio5" value="no" id="rb10" onClick="nextQuestion()"/>
+ <label for="rb10"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Have you had a new cough, wheezing, or cold symptoms in the last 2 weeks?</p>
+ <ul>
+ <li><input type="radio" name="picradio6" value="yes" id="rb11" onClick="nextQuestion()"/>
+ <label for="rb11"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio6" value="no" id="rb12" onClick="nextQuestion()"/>
+ <label for="rb12"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Can you walk at least two blocks (0.2 miles) up 1 flight of stairs without stopping?</p>
+ <ul>
+ <li><input type="radio" name="picradio7" value="yes" id="rb13" onClick="nextQuestion()"/>
+ <label for="rb13"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio7" value="no" id="rb14" onClick="nextQuestion()"/>
+ <label for="rb14"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Have you had a heart attack or any hospitlaization or emergency visit for chest pain in the past 6 months?</p>
+ <ul>
+ <li><input type="radio" name="picradio8" value="yes" id="rb15" onClick="nextQuestion()"/>
+ <label for="rb15"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio8" value="no" id="rb16" onClick="nextQuestion()"/>
+ <label for="rb16"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div> 
+ <div class="form-group list-group">
+ <p>Do you have congestive heart failure?</p>
+ <ul>
+ <li><input type="radio" name="picradio9" value="yes" id="rb17" onClick="nextQuestion()"/>
+ <label for="rb17"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio9" value="no" id="rb18" onClick="nextQuestion()"/>
+ <label for="rb18"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Have you had any heart surgery or medical stents placed in the last 3 months?</p>
+ <ul>
+ <li><input type="radio" name="picradio10" value="yes" id="rb19" onClick="nextQuestion()"/>
+ <label for="rb19"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio10" value="no" id="rb20" onClick="nextQuestion()"/>
+ <label for="rb20"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Have you had a stroke or TIA in the past 3 months?</p>
+ <ul>
+ <li><input type="radio" name="picradio11" value="yes" id="rb21" onClick="nextQuestion()"/>
+ <label for="rb21"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio11" value="no" id="rb22" onClick="nextQuestion()"/>
+ <label for="rb22"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Have you had a blood clot in the past 3 months?</p>
+ <ul>
+ <li><input type="radio" name="picradio12" value="yes" id="rb23" onClick="nextQuestion()"/>
+ <label for="rb23"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio12" value="no" id="rb24" onClick="nextQuestion()"/>
+ <label for="rb24"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div> 
+ 
+ <div class="form-group list-group">
+ <p>Do you smoke cigarettes?</p>
+ <ul>
+ <li><input type="radio" name="picradio13" value="yes" id="rb25" onClick="nextQuestion()"/>
+ <label for="rb25"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio13" value="no" id="rb26" onClick="nextQuestion()"/>
+ <label for="rb26"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Do you have any obstructive sleep apnea?</p>
+ <ul>
+ <li><input type="radio" name="picradio14" value="yes" id="rb27" onClick="nextQuestion()"/>
+ <label for="rb27"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio14" value="no" id="rb28" onClick="nextQuestion()"/>
+ <label for="rb28"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Do you use BIPAP/CPAP?</p>
+ <ul>
+ <li><input type="radio" name="picradio15" value="yes" id="rb29" onClick="nextQuestion()"/>
+ <label for="rb29"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio15" value="no" id="rb30" onClick="nextQuestion()"/>
+ <label for="rb30"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Do you snore loud enough to be heard through a closed door or to disturb your partner?</p>
+ <ul>
+ <li><input type="radio" name="picradio16" value="yes" id="rb31" onClick="nextQuestion()"/>
+ <label for="rb31"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio16" value="no" id="rb32" onClick="nextQuestion()"/>
+ <label for="rb32"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div> 
+ 
+ <div class="form-group list-group">
+ <p>Do you often feel fatigued or sleepy during the daytime after a full nights sleep?</p>
+ <ul>
+ <li><input type="radio" name="picradio17" value="yes" id="rb33" onClick="nextQuestion()"/>
+ <label for="rb33"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio17" value="no" id="rb34" onClick="nextQuestion()"/>
+ <label for="rb34"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+ </div>
+ 
+ <div class="form-group list-group">
+ <p>Has anyone observed you gasping or stop breathing while you were sleeping?</p>
+ <ul>
+ <li><input type="radio" name="picradio18" value="yes" id="rb35" onClick="nextQuestion()"/>
+ <label for="rb35"><img src="http://minathuvia.com/yes.png" /></label>
+ </li>
+ <li><input type="radio" name="picradio18" value="no" id="rb36" onClick="nextQuestion()"/>
+ <label for="rb36"><img src="http://minathuvia.com/no.png" /></label>
+ </li>
+ </ul>
+</div>
+
+
+ <div class="form-group list-group">
+ <button id='submit' type='submit' class="btn btn-primary">Submit</button>
+ </div>
+
+<!-- These will not be in the pagination as they are out of the form tag and with the correct class -->
+
+
+</form>
+
+
+</div></div></div>
+
+
+<script>
+
+
+ 
+Qs = ['Question1','Question2','Question3','Question 4']
+
+
+function getFormVals() {
+ record = {}
+ // record.lastName = $('#lastname').val()
+ // record.firstName = $('#firstname').val()
+ // record.patientSSN = $('#PatientSSN').val()
+
+// This approach uses an id attribute to obtain the value of the input element and then adds that to the record object
+// Sticking with this approach, the added questions would be access as follows. Adding a #1 to the id just to separate Alon's questions from mine
+// TODO: loop through the questions rather than doing this individually
+ record.lastName1 = $('#lastname1').val()
+ record.firstName1 = $('#firstname1').val()
+ record.email1 = $('#email1').val()
+ record.ssn1 = $('#ssn1').val()
+ record.radioQuestion1 = $("input[name='picradio1']:checked").val();
+ record.radioQuestion2 = $("input[name='picradio2']:checked").val();
+ record.radioQuestion3 = $("input[name='picradio3']:checked").val();
+ record.radioQuestion4 = $("input[name='picradio4']:checked").val();
+ record.radioQuestion5 = $("input[name='picradio5']:checked").val();
+ record.radioQuestion6 = $("input[name='picradio6']:checked").val();
+ record.radioQuestion7 = $("input[name='picradio7']:checked").val();
+ record.radioQuestion8 = $("input[name='picradio8']:checked").val();
+ record.radioQuestion9 = $("input[name='picradio9']:checked").val();
+ record.radioQuestion10 = $("input[name='picradio10']:checked").val();
+ record.radioQuestion11 = $("input[name='picradio11']:checked").val();
+ record.radioQuestion12 = $("input[name='picradio12']:checked").val();
+ record.radioQuestion13 = $("input[name='picradio13']:checked").val();
+ record.radioQuestion14 = $("input[name='picradio14']:checked").val();
+ record.radioQuestion15 = $("input[name='picradio15']:checked").val();
+ record.radioQuestion16 = $("input[name='picradio16']:checked").val();
+ record.radioQuestion17 = $("input[name='picradio17']:checked").val();
+ record.radioQuestion18 = $("input[name='picradio18']:checked").val();
+
+ //
+ console.log(record)
+ var choice = $(':input').serializeArray()
+ record.choice = choice;
+ $.ajax({
+ type:'POST',
+ url:'/post',
+ contentType:'application/json',
+ data:JSON.stringify(record),
+ success:function(response){
+ console.log(response)
+ }
+
+ })
+}
+
+$('#submit').click(getFormVals)
+
+
+
+
+// pagination javaScript
+var numberOfItems = $("#loop .list-group").length
+var limitPerPage = 1;
+var totalPages = Math.round(numberOfItems / limitPerPage);
+
+
+$("#loop .list-group:gt("+ (limitPerPage-1) +")").hide(); 
+$("#pagination").append("<li class='page-item current-page hideme active'><a class='page-link' href='javascript:void(0)'>" + 1 + "</a></li>");
+
+
+for (var i = 2; i <= totalPages; i++) {
+ $("#pagination").append("<li class='page-item current-page hideme'><a class='page-link' href='javascript:void(0)'>" + i + "</a></li>")
+}
+ 
+$(".hideme").hide();
+$("#pagination").append("<li id='next-page' class='page-item'><a class='page-link' href='javascript:void(0)'aria-label='Next'><span aria-hidden='true'>Next &raquo;</span><span class='sr-only'>Next</span></a></li>");
+ 
+ 
+$("#next-page").on("click", function() {
+ var currentPage = $(".pagination li.active").index();
+ if(currentPage === totalPages) {
+ return false;
+ } else {
+ currentPage++;
+ $(".pagination li").removeClass("active");
+ $("#loop .list-group").hide();
+ var grandTotal = limitPerPage * currentPage;
+ for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+ $("#loop .list-group:eq(" + i + ")").show();
+ }
+ $(".pagination li.current-page:eq(" + (currentPage - 1) +")").addClass("active");
+ }
+});
+ 
+$("#previous-page").on("click", function() {
+ var currentPage = $(".pagination li.active").index();
+ if(currentPage === 1) {
+ return false;
+ } else {
+ currentPage--;
+ $(".pagination li").removeClass("active");
+ $("#loop .list-group").hide();
+ var grandTotal = limitPerPage * currentPage;
+ for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+ $("#loop .list-group:eq(" + i + ")").show();
+ }
+ $(".pagination li.current-page:eq(" + (currentPage - 1) +")").addClass("active");
+ }
+});
+
+ 
+function nextQuestion() {
+ var currentPage = $(".pagination li.active").index();
+ if(currentPage === totalPages) {
+ return false;
+ } else {
+ setTimeout(function(){ // give a short delay prior to executing the nextQuestion function
+ currentPage++;
+ console.log (currentPage);
+ $(".pagination li").removeClass("active");
+ $("#loop .list-group").hide();
+ var grandTotal = limitPerPage * currentPage;
+ for (var i = grandTotal - limitPerPage; i < grandTotal; i++) {
+ $("#loop .list-group:eq(" + i + ")").show();
+ }
+ $(".pagination li.current-page:eq(" + (currentPage - 1) +")").addClass("active");
+ }
+ ,1000) // setTimeout delay here
+ }
+}
+
+
+$("#previous-page").hide(); 
+$("#next-page").hide();
+
+</script>
+</body>
+</html>
